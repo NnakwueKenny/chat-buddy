@@ -1,0 +1,27 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "A web app built built entirely with Javascript & TailwindCSS (MERN stack - MongoDB, Express.js, React,js and Node.js) to showcase my skill in the aforementioned area",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "mongodb",
+    "react",
+    "node",
+    "express",
+    "app",
+    "social media",
+    "javascript"
+  ],
+  "author": "Kenechukwu Nnakwue",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^6.8.1",
+    "tinify": "^1.7.1"
+  }
+}
