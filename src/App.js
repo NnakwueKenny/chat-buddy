@@ -1,14 +1,16 @@
+import { Box } from '@mui/material';
 import './App.css';
-import logo  from './assets/images/logo.jpg'
+import logo  from './assets/images/logo.jpg';
 
-function App() {
+// Import components
+import WelcomePage from './components/welcome/WelcomePage';
+
+const App = () => {
+  console.log('Hello')
   return (
-    <div className="App">
-      <header className="App-header uppercase">
-        Chat Buddy
-      </header>
-      
-    </div>
+    <Box className="h-screen">
+      <WelcomePage />
+    </Box>
   );
 }
 
