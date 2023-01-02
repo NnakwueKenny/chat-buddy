@@ -1,5 +1,4 @@
-// console.log(`Server is running on port 5000`);
-
+// Introductory parts (modules like )
 // const questions = [
 //     "What is your name?",
 //     "What would you rather be doing?",
@@ -29,5 +28,40 @@
 
 // ask(answers.length);
 
-const waitTime = 3000;
-console.log(`Setting  a ${waitTime / 1000} second delay`);
+// const waitTime = 3000;
+// console.log(`Setting a ${waitTime / 1000}-second delay`);
+
+// const timerFinished = () => {
+//     clearInterval(interval)
+//     console.log('done');
+// }
+
+// setTimeout(timerFinished, waitTime);
+
+// const waitInterval = 500;
+// let currentTime = 0;
+
+// const incTime = () => {
+//     currentTime += waitInterval;
+//     const p = Math.floor((currentTime / waitTime) * 100);
+//     // process.stdout.clearLine();
+//     process.stdout.cursorTo(5);
+//     process.stdout.write(`Waiting... ${p} seconds \n`);
+// }
+
+// const interval = setInterval(incTime, waitInterval);
+
+const path = require('path');
+const util = require('util');
+const v8 = require('v8');
+console.log(path.basename(__filename));
+const dirUploads = path.join(
+    __dirname,
+    'www',
+    'files',
+    'uploads'
+);
+
+console.log(dirUploads);
+util.log(dirUploads);
+util.log(v8.getHeapStatistics())
