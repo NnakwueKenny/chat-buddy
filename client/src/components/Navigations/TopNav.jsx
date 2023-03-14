@@ -1,85 +1,81 @@
-import { Box, Stack } from '@mui/system';
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
-import { AppBar, IconButton, Tab, Tabs, Toolbar, Typography } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
+// import PropTypes from 'prop-types';
+import { Box, Tab, Tabs, useTheme } from '@mui/material';
+import PhoneIcon from '@mui/icons-material/Phone';
+import MessageIcon from '@mui/icons-material/Message';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
-function TabPanel(props) {
-    const { children, value, index, ...other } = props;
-
+function LinkTab(props) {
+    const navigate = useNavigate();
     return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`simple-tabpanel-${index}`}
-            aria-labelledby={`simple-tab-${index}`}
-            {...other}
-        >
-            {value === index && (
-                <Box sx={{ p: 3 }}>
-                    <Typography>{children}</Typography>
-                </Box>
-            )}
-        </div>
+        <Tab
+            component="button"
+            onClick={(event) => {
+                // event.preventDefault()
+                navigate(props.navigateto);
+            }}
+            sx={{ display: 'flex', justifyContent: 'center' }}
+            {...props}
+        />
     );
 }
-
-TabPanel.propTypes = {
-    children: PropTypes.node,
-    index: PropTypes.number.isRequired,
-    value: PropTypes.number.isRequired,
-};
-
-function a11yProps(index) {
-    return {
-        id: `simple-tab-${index}`,
-        'aria-controls': `simple-tabpanel-${index}`,
-    };
-}
-
-const TopNav = () => {
-    const [value, setValue] = React.useState(0);
-
+  
+export default function TopNav() {
+    const location = useLocation();
+    const currentPath = location.pathname;
+    const [value, setValue] = React.useState('one');
+    const theme = useTheme();
+    
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
-    return (
-        <AppBar sx={{ backgroundColor: 'transparent' }}>
-            <Toolbar>
-                <Box direction='column'>
-                    <Stack direction='row'>
-                        <Box>
-                            <Typography color='primary'>Chat Buddy</Typography>
-                        </Box>
-                        <Box>
-                            <IconButton aria-label="delete" variant='outlined'>
-                                <DeleteIcon />
-                            </IconButton>
-                        </Box>
-                    </Stack>
-                    <Box sx={{ width: '100%', color: 'green' }}>
-                        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                            <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                                <Tab label="Item One" {...a11yProps(0)} />
-                                <Tab label="Item Two" {...a11yProps(1)} />
-                                <Tab label="Item Three" {...a11yProps(2)} />
-                            </Tabs>
-                        </Box>
-                        <TabPanel value={value} index={0}>
-                            Item One
-                        </TabPanel>
-                        <TabPanel value={value} index={1}>
-                            Item Two
-                        </TabPanel>
-                        <TabPanel value={value} index={2}>
-                            Item Three
-                        </TabPanel>
-                    </Box>
-                </Box>
-            </Toolbar>
-        </AppBar>
-    )
-}
 
-export default TopNav;
+    const LinkValues = [
+        {
+            icon: <MessageIcon />,
+            navigateto: '/chats',
+            value: currentPath === '/chats' || currentPath === '/'? 'one': currentPath === '/status'? 'three': 'two',
+            label: 'Chats'
+        },
+        {
+            icon: <AccessTimeIcon />,
+            navigateto: '/status',
+            value: currentPath === '/status'? 'one': currentPath === '/calls'? 'three': 'two',
+            label: 'Status'
+        },
+        {
+            icon: <PhoneIcon />,
+            navigateto: '/calls',
+            value: currentPath === '/calls'? 'one': currentPath === '/chats' || currentPath === '/'? 'three': 'two',
+            label: 'Calls'
+        },
+    ]
+
+    return (
+        <Box sx={{ width: '100%', backgroundColor: 'theme.palette.background.header',  }}>
+            <Tabs
+                sx={{width: '100%',}}
+                value={value}
+                variant='fullWidth'
+                onChange={handleChange}
+                textColor="inherit"
+                indicatorColor="primary"
+                aria-label="primary tabs example"
+                selectionFollowsFocus
+            >
+                {
+                    LinkValues.map(item => (
+                        <LinkTab
+                        key={item.value}
+                        navigateto={item.navigateto}
+                        icon={item.icon}
+                        iconPosition='start'
+                        value={item.value} label={item.label}/>)
+                    )
+                }
+            </Tabs>
+        </Box>
+    );
+}
