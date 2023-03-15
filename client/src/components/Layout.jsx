@@ -19,7 +19,6 @@ import Divider from '@mui/material/Divider';
 
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { toggleThemeMode } from '../features/themeSlice';
-import StatusModal from './modals/StatusModal';
 
 const drawerWidth =65;
 
@@ -139,7 +138,6 @@ const Layout = () => {
                         <TopNav />
                     }
                     <Outlet />
-                    <StatusModal />
                 </Box>
             </Box>
         </ThemeProvider>
