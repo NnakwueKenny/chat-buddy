@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
-    cartItems: [],
+    allChats: [],
     amount: 0,
     total: 0,
     isLoading: true,

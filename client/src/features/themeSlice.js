@@ -50,7 +50,6 @@ const themeSlice = createSlice({
             default: 'white',
             header: purple[600],
             primary: blueGrey[900],
-            paper: purple[900],
           },
           text: {
             primary: grey[800],
@@ -73,7 +72,6 @@ const themeSlice = createSlice({
             default: blueGrey[900],
             header: blueGrey[800],
             primary: blueGrey[900],
-            paper: purple[900],
           },
           text: {
             primary: grey[400],
