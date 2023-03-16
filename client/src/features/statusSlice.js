@@ -11,7 +11,7 @@ const initialState = {
     selectedStatus: {
         id: 0,
         muted: false,
-        userName: '',
+        userName: 'Kene',
         lastUpdate: '',
         statusData: [],
     },
@@ -28,6 +28,7 @@ const allStatus = [
         id: 0,
         muted: false,
         userName: 'Kene Nnakwue',
+        profilePicture: '',
         lastUpdate: 'Today, 12:36',
         statusData: [
             {
@@ -51,7 +52,8 @@ const allStatus = [
     {
         id: 1,
         muted: false,
-        userName: 'Fatima Muhammad',
+        userName: 'Faruq Abiodun',
+        profilePicture: '',
         lastUpdate: 'Today, 12:36',
         statusData: [
             {
@@ -60,7 +62,7 @@ const allStatus = [
                     alt: '',
                     src: 'https://images.pexels.com/photos/15098091/pexels-photo-15098091.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load',
                 },
-                read: false, 
+                read: true, 
             },
             {
                 id: 3,
@@ -75,7 +77,8 @@ const allStatus = [
     {
         id: 2,
         muted: false,
-        userName: 'Kene Nnakwue',
+        userName: 'Abubakar Muhammad',
+        profilePicture: '',
         lastUpdate: 'Today, 12:36',
         statusData: [
             {
@@ -84,7 +87,7 @@ const allStatus = [
                     alt: '',
                     src: 'https://images.pexels.com/photos/15098091/pexels-photo-15098091.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load',
                 },
-                viewed: true, 
+                viewed: true,
             },
             {
                 id: 2,
@@ -99,7 +102,8 @@ const allStatus = [
     {
         id: 3,
         muted: false,
-        userName: 'Fatima Muhammad',
+        userName: 'Salma Gambo',
+        profilePicture: '',
         lastUpdate: 'Today, 12:36',
         statusData: [
             {
@@ -132,6 +136,7 @@ const allStatus = [
         id: 4,
         muted: true,
         userName: 'Fatima Muhammad',
+        profilePicture: '',
         lastUpdate: 'Today, 12:36',
         statusData: [
             {
@@ -189,7 +194,7 @@ const statusSlice = createSlice({
         getSingleStatus: (state, action) => {
             const statusID = action.payload;
             console.log(`Status with the ID '${statusID}' selected!`);
-            const selectedStatus = state.allStatus.filter(status => status.id === statusID);
+            state.selectedStatus = state.allStatus.filter(status => status.id === statusID)[0];
         }
     },
     extraReducers: {
@@ -206,8 +211,12 @@ const statusSlice = createSlice({
             const viewedStatus = allStatus.filter(status => {
                 return !status.muted && !status.statusData.some(statusItem => statusItem.read === false);
             });
+            const mutedStatus = allStatus.filter(status => {
+                return status.muted;
+            });
             state.recentStatus = recentStatus;
             state.viewedStatus = viewedStatus;
+            state.mutedStatus = mutedStatus;
         },
         [getAllStatus.rejected]: (state) => {
             state.isLoading = false;

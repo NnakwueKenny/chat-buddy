@@ -99,7 +99,7 @@ const Pane = ({ status, type }) => {
 
 const StatusPane = () => {
     const dispatch = useDispatch();
-    const { recentStatus, viewedStatus } = useSelector((store) => store.status);
+    const { recentStatus, viewedStatus, mutedStatus } = useSelector((store) => store.status);
 
     useEffect(() => {
         dispatch(getAllStatus());
@@ -110,7 +110,7 @@ const StatusPane = () => {
             <Grid>
                 <Pane status={ recentStatus } type='recent'/>
                 <Pane status={ viewedStatus } type='viewed'/>
-                <Pane status={ viewedStatus } type='muted'/>
+                <Pane status={ mutedStatus } type='muted'/>
             </Grid>
             <StatusModal />
         </Box>
