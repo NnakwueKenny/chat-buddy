@@ -1,14 +1,22 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+// import axios from "axios";
 
 const url = 'https://course-api.com/react-useReducer-cart-project';
 
 const initialState = {
+    allStatus: [],
     recentStatus: [],
     viewedStatus: [],
     mutedStatus: [],
+    selectedStatus: {
+        id: 0,
+        muted: false,
+        userName: '',
+        lastUpdate: '',
+        statusData: [],
+    },
     modal: {
-        isOpen: true,
+        isOpen: false,
     },
     amount: 0,
     total: 0,
@@ -154,10 +162,10 @@ const allStatus = [
     },
 ]
 
-export const getAllStatus = createAsyncThunk('cart/getAllStatus',
+export const getAllStatus = createAsyncThunk('status/getAllStatus',
     async (name, thunkAPI) => {
         try {
-            // console.log(thunkAPI);
+            // console.log('thunkAPI');
             // console.log('jyugyu', thunkAPI.getState());
             // const response = await axios(url);
             // return response.data;
@@ -173,13 +181,16 @@ const statusSlice = createSlice({
     initialState,
     reducers: {
         openStatusModal: (state, action) => {
-            console.log(action.payload);
-            state.isOpen = true;
+            state.modal.isOpen = true;
         },
         closeStatusModal: (state, action) => {
-            console.log(action.payload);
-            state.isOpen = false;
+            state.modal.isOpen = false;
         },
+        getSingleStatus: (state, action) => {
+            const statusID = action.payload;
+            console.log(`Status with the ID '${statusID}' selected!`);
+            const selectedStatus = state.allStatus.filter(status => status.id === statusID);
+        }
     },
     extraReducers: {
         [getAllStatus.pending]: (state) => {
@@ -188,6 +199,7 @@ const statusSlice = createSlice({
         [getAllStatus.fulfilled]: (state, action) => {
             state.isLoading = false;
             const allStatus = action.payload;
+            state.allStatus = allStatus;
             const recentStatus = allStatus.filter(status => {
                 return !status.muted && status.statusData.some(statusItem => statusItem.read === false)
             });
@@ -203,6 +215,9 @@ const statusSlice = createSlice({
     }
 });
 
-export const { openStatusModal, closeStatusModal } = statusSlice.actions;
+export const {
+    openStatusModal, closeStatusModal,
+    getSingleStatus
+} = statusSlice.actions;
 
 export default statusSlice.reducer;

@@ -1,9 +1,12 @@
-import React , { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
 import { Button, Box, Modal, Backdrop, Fade, Avatar, Stack, Typography, Menu, MenuItem } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { styled } from '@mui/system';
+
+import { closeStatusModal, selectedStatus } from '../../features/statusSlice';
 
 const style = {
   width: '100%',
@@ -26,8 +29,7 @@ const StyledBackDrop = styled(Backdrop, {
 });
 
 const BasicMenu = () => {
-  const navigate = useNavigate();
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -57,23 +59,26 @@ const BasicMenu = () => {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={() => {console.log('Status Muted'); handleClose()}}>Mute Status</MenuItem>
+        <MenuItem onClick={handleClose}>Mute Status</MenuItem>
       </Menu>
     </div>
   );
   }
 
-const FullModal = () => {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+const StatusModal = () => {
+  const dispatch = useDispatch();
+  const { isOpen } = useSelector((state) =>  state.status.modal );
+
+  const handleClose = () => {
+    dispatch(closeStatusModal());
+  };
+
   return (
     <div>
-      <Button onClick={handleOpen}>Open modal</Button>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
-        open={open}
+        open={isOpen}
         onClose={handleClose}
         closeAfterTransition
         BackdropComponent={StyledBackDrop}
@@ -82,7 +87,7 @@ const FullModal = () => {
         }}
         sx={{ padding: '15px' }}
       >
-        <Fade in={open}>
+        <Fade in={isOpen}>
           <Box sx={style}>
             <Stack direction='row' justifyContent='space-between'>
               <Button onClick={handleClose}><ArrowBack /></Button>
@@ -92,7 +97,7 @@ const FullModal = () => {
                     alt={'https://images.pexels.com/photos/15098091/pexels-photo-15098091.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load'}
                     src={'https://images.pexels.com/photos/15098091/pexels-photo-15098091.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load'}
                   />
-                  <Typography>Kene Nnakwue</Typography>
+                  <Typography>{selectedStatus.userName}</Typography>
                 </Stack>
               </Button>
               <BasicMenu />
@@ -104,4 +109,4 @@ const FullModal = () => {
   )
 }
 
-export default FullModal;
+export default StatusModal;
