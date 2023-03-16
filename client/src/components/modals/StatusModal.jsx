@@ -6,7 +6,7 @@ import { ArrowBack } from '@mui/icons-material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { styled } from '@mui/system';
 
-import { closeStatusModal, selectedStatus } from '../../features/statusSlice';
+import { closeStatusModal } from '../../features/statusSlice';
 
 const style = {
   width: '100%',
@@ -68,6 +68,7 @@ const BasicMenu = () => {
 const StatusModal = () => {
   const dispatch = useDispatch();
   const { isOpen } = useSelector((state) =>  state.status.modal );
+  const { selectedStatus } = useSelector((state) =>  state.status );
 
   const handleClose = () => {
     dispatch(closeStatusModal());
