@@ -114,6 +114,10 @@ const Layout = () => {
                             Chat Buddy
                         </Typography>
                     </Toolbar>
+                    {
+                        isPhoneAndMediumTablet &&
+                        <TopNav />
+                    }
                 </AppBar>
                 {
                     isBigTabletAndAbove &&
@@ -132,12 +136,14 @@ const Layout = () => {
                     </Drawer>
                 }
                 <Box component="main" sx={{ flexGrow: 1, p: 0 }}>
-                    <DrawerHeader />
-                    {
-                        isPhoneAndMediumTablet &&
-                        <TopNav />
-                    }
-                    <Outlet />
+                  {
+                    isPhoneAndMediumTablet && 
+                    <>
+                      <Toolbar />
+                    </>
+                  }
+                  <Toolbar />
+                  <Outlet />
                 </Box>
             </Box>
         </ThemeProvider>

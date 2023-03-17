@@ -6,6 +6,8 @@ import { ArrowBack } from '@mui/icons-material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { styled } from '@mui/system';
 
+import StatusProgress from '../Others/StatusProgress'
+
 import { closeStatusModal, toggleMute } from '../../features/statusSlice';
 
 const style = {
@@ -14,8 +16,7 @@ const style = {
   bgcolor: 'background.default',
   border: '2px solid grey',
   boxShadow: 10,
-  p: 2,
-  borderRadius: '10px'
+  p: 1,
 };
 
 const StyledBackDrop = styled(Backdrop, {
@@ -75,6 +76,26 @@ const StatusModal = () => {
     dispatch(closeStatusModal());
   };
 
+  const statuses = [
+    {
+      duration: 5000,
+    },
+    {
+      duration: 5000
+    },
+    {
+      duration: 5000,
+    },
+    {
+      duration: 5000
+    },
+    {
+      duration: 30000
+    },
+  ]
+
+  const getCumu
+
   return (
     <div>
       <Modal
@@ -87,7 +108,6 @@ const StatusModal = () => {
         BackdropProps={{
           timeout: 800,
         }}
-        sx={{ padding: '15px' }}
       >
         <Fade in={isOpen}>
           <Box sx={style}>
@@ -104,7 +124,15 @@ const StatusModal = () => {
               </Button>
               <BasicMenu />
             </Stack>
-            hello
+            <div className='absolute top-20 left-0 w-full h-full border-t border-primary'>
+              <Stack direction='row' gap={0.2}>
+                {
+                  statuses.map((status, index, arr) => (
+                    <StatusProgress key={status.id} duration={status.duration} delay={index === 0? 0: arr[index-1].duration} />
+                  ))
+                }
+              </Stack>
+            </div>
           </Box>
         </Fade>
       </Modal>
