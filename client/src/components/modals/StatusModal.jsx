@@ -76,30 +76,12 @@ const StatusModal = () => {
     dispatch(closeStatusModal());
   };
 
-  const statuses = [
-    {
-      duration: 5000,
-    },
-    {
-      duration: 5000
-    },
-    {
-      duration: 5000,
-    },
-    {
-      duration: 5000
-    },
-    {
-      duration: 30000
-    },
-  ]
-
   const getCumulativeDuration = (array, arrIndex, duration) => {
     const filteredArray = array.filter((element, index) => index <= arrIndex );
-    const sum = filteredArray.reduce((accumulator, currentValue) => {
-      const cumValue = ''
-      return accumulator + currentValue.duration;
+    const sum = filteredArray.reduce((accumulator, currentValue, index) => {
+      return index === 0? 0: accumulator + currentValue.media.duration;
     }, 0);
+    console.log(sum)
     return sum;
   }
 
@@ -134,9 +116,13 @@ const StatusModal = () => {
             <div className='absolute top-20 left-0 w-full h-full border-t border-primary'>
               <Stack direction='row' gap={0.2}>
                 {
-                  statuses.map((status, index, arr) => (
-                    <StatusProgress key={status.id} duration={status.duration}
-                    delay={index === 0? 0: getCumulativeDuration(arr, index, status.duration)} />
+                  selectedStatus.statusData.map((status, index, arr) => (
+                    <>
+                      <StatusProgress key={status.id}
+                        duration={status.media.duration}
+                        delay={getCumulativeDuration(arr, index, status.media.duration)}
+                      />
+                    </>
                   ))
                 }
               </Stack>

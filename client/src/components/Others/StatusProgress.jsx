@@ -6,6 +6,7 @@ export default function StatusProgress({ duration, delay }) {
   const [progress, setProgress] = React.useState(0);
 
   React.useEffect(() => {
+    console.log(`It will take ${delay} seconds before this component loads`)
     setTimeout(() => {
       const interval = setInterval(() => {
         setProgress((prevValue) => {
@@ -18,7 +19,8 @@ export default function StatusProgress({ duration, delay }) {
       }, duration/100);
       return () => clearInterval(interval);
     }, delay);
-  }, []);
+    
+  }, [duration, delay]);
 
   return (
     <Box sx={{ width: '100%' }}>

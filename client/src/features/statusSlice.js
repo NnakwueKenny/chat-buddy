@@ -35,6 +35,7 @@ const allStatus = [
                 id: 1,
                 media: {
                     alt: '',
+                    duration: 5000,
                     src: 'https://images.pexels.com/photos/15098091/pexels-photo-15098091.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load',
                 },
                 read: false, 
@@ -43,6 +44,7 @@ const allStatus = [
                 id: 2,
                 media: {
                     alt: '',
+                    duration: 5000,
                     src: 'https://images.pexels.com/photos/6236640/pexels-photo-6236640.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load',
                 },
                 read: false, 
@@ -60,6 +62,7 @@ const allStatus = [
                 id: 2,
                 media: {
                     alt: '',
+                    duration: 5000,
                     src: 'https://images.pexels.com/photos/15098091/pexels-photo-15098091.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load',
                 },
                 read: true, 
@@ -68,6 +71,7 @@ const allStatus = [
                 id: 3,
                 media: {
                     alt: '',
+                    duration: 5000,
                     src: 'https://images.pexels.com/photos/6236640/pexels-photo-6236640.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load',
                 },
                 read: false, 
@@ -85,6 +89,7 @@ const allStatus = [
                 id: 1,
                 media: {
                     alt: '',
+                    duration: 5000,
                     src: 'https://images.pexels.com/photos/15098091/pexels-photo-15098091.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load',
                 },
                 viewed: true,
@@ -93,6 +98,7 @@ const allStatus = [
                 id: 2,
                 media: {
                     alt: '',
+                    duration: 5000,
                     src: 'https://images.pexels.com/photos/6236640/pexels-photo-6236640.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load',
                 },
                 viewed: true, 
@@ -110,6 +116,7 @@ const allStatus = [
                 id: 1,
                 media: {
                     alt: '',
+                    duration: 5000,
                     src: 'https://images.pexels.com/photos/15098091/pexels-photo-15098091.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load',
                 },
                 viewed: true, 
@@ -118,6 +125,7 @@ const allStatus = [
                 id: 2,
                 media: {
                     alt: '',
+                    duration: 5000,
                     src: 'https://images.pexels.com/photos/6236640/pexels-photo-6236640.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load',
                 },
                 viewed: true, 
@@ -126,6 +134,7 @@ const allStatus = [
                 id: 3,
                 media: {
                     alt: '',
+                    duration: 5000,
                     src: 'https://images.pexels.com/photos/15098091/pexels-photo-15098091.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load',
                 },
                 viewed: true, 
@@ -143,6 +152,7 @@ const allStatus = [
                 id: 1,
                 media: {
                     alt: '',
+                    duration: 5000,
                     src: 'https://images.pexels.com/photos/15098091/pexels-photo-15098091.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load',
                 },
                 viewed: true, 
@@ -151,6 +161,7 @@ const allStatus = [
                 id: 2,
                 media: {
                     alt: '',
+                    duration: 5000,
                     src: 'https://images.pexels.com/photos/6236640/pexels-photo-6236640.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load',
                 },
                 viewed: true, 
@@ -159,6 +170,7 @@ const allStatus = [
                 id: 3,
                 media: {
                     alt: '',
+                    duration: 5000,
                     src: 'https://images.pexels.com/photos/15098091/pexels-photo-15098091.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load',
                 },
                 viewed: true, 
