@@ -94,7 +94,14 @@ const StatusModal = () => {
     },
   ]
 
-  const getCumu
+  const getCumulativeDuration = (array, arrIndex, duration) => {
+    const filteredArray = array.filter((element, index) => index <= arrIndex );
+    const sum = filteredArray.reduce((accumulator, currentValue) => {
+      const cumValue = ''
+      return accumulator + currentValue.duration;
+    }, 0);
+    return sum;
+  }
 
   return (
     <div>
@@ -128,7 +135,8 @@ const StatusModal = () => {
               <Stack direction='row' gap={0.2}>
                 {
                   statuses.map((status, index, arr) => (
-                    <StatusProgress key={status.id} duration={status.duration} delay={index === 0? 0: arr[index-1].duration} />
+                    <StatusProgress key={status.id} duration={status.duration}
+                    delay={index === 0? 0: getCumulativeDuration(arr, index, status.duration)} />
                   ))
                 }
               </Stack>
