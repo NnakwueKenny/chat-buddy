@@ -16,7 +16,7 @@ const initialState = {
         statusData: [],
     },
     modal: {
-        isOpen: false,
+        isOpen: true,
     },
     amount: 0,
     total: 0,
@@ -185,11 +185,14 @@ const statusSlice = createSlice({
     name: 'status',
     initialState,
     reducers: {
-        openStatusModal: (state, action) => {
+        openStatusModal: (state) => {
             state.modal.isOpen = true;
         },
-        closeStatusModal: (state, action) => {
+        closeStatusModal: (state) => {
             state.modal.isOpen = false;
+        },
+        toggleMute: (state, action) => {
+            console.log('Toggled status mute!');
         },
         getSingleStatus: (state, action) => {
             const statusID = action.payload;
@@ -226,7 +229,7 @@ const statusSlice = createSlice({
 
 export const {
     openStatusModal, closeStatusModal,
-    getSingleStatus
+    getSingleStatus, toggleMute
 } = statusSlice.actions;
 
 export default statusSlice.reducer;

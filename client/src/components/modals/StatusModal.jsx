@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Button, Box, Modal, Backdrop, Fade, Avatar, Stack, Typography, Menu, MenuItem } from '@mui/material';
@@ -6,7 +6,7 @@ import { ArrowBack } from '@mui/icons-material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { styled } from '@mui/system';
 
-import { closeStatusModal } from '../../features/statusSlice';
+import { closeStatusModal, toggleMute } from '../../features/statusSlice';
 
 const style = {
   width: '100%',
@@ -29,6 +29,7 @@ const StyledBackDrop = styled(Backdrop, {
 });
 
 const BasicMenu = () => {
+  const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -59,11 +60,11 @@ const BasicMenu = () => {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose}>Mute Status</MenuItem>
+        <MenuItem onClick={() => { dispatch(toggleMute()); handleClose(); }}>Mute Status</MenuItem>
       </Menu>
     </div>
   );
-  }
+}
 
 const StatusModal = () => {
   const dispatch = useDispatch();
@@ -92,7 +93,7 @@ const StatusModal = () => {
           <Box sx={style}>
             <Stack direction='row' justifyContent='space-between'>
               <Button onClick={handleClose}><ArrowBack /></Button>
-              <Button sx={{width: '100%'}}>
+              <Button variant='text' sx={{width: '100%', textTransform: 'none', color: 'text.primary' }}>
                 <Stack sx={{width: '100%'}} direction='row' alignItems='center' spacing={1.5}>
                   <Avatar sx={{ height: 48, width: 48, }}
                     alt={'https://images.pexels.com/photos/15098091/pexels-photo-15098091.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load'}
@@ -103,6 +104,7 @@ const StatusModal = () => {
               </Button>
               <BasicMenu />
             </Stack>
+            hello
           </Box>
         </Fade>
       </Modal>

@@ -85,7 +85,7 @@ const Pane = ({ status, type }) => {
                         >
                             <Box sx={{ width: '100%' }}>
                                 <Stack direction='column' sx={{ display: 'flex', alignItems: 'start', justifyContent: 'space-between', color: 'darkText' }}>
-                                    <Typography variant='body1' component='h2' sx={{ color: theme.palette.text.primary, fontWeight: '400' }}>{status.userName}</Typography>
+                                    <Typography variant='body1' component='h2' sx={{ color: 'text.primary', fontWeight: '400' }}>{status.userName}</Typography>
                                     <Typography variant='caption' noWrap sx={{ width: '100%', color: theme.palette.text.secondary, display: 'flex', justifyContent: 'start' }} component='h2'>{status.lastUpdate}</Typography>
                                 </Stack>
                             </Box>
