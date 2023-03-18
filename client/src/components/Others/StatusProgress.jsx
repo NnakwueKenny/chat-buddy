@@ -6,7 +6,6 @@ export default function StatusProgress({ duration, delay }) {
   const [progress, setProgress] = React.useState(0);
 
   React.useEffect(() => {
-    console.log(`It will take ${delay} seconds before this component loads`)
     setTimeout(() => {
       const interval = setInterval(() => {
         setProgress((prevValue) => {

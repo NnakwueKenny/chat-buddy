@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Button, Box, Modal, Backdrop, Fade, Avatar, Stack, Typography, Menu, MenuItem } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import { styled } from '@mui/system';
 
 import StatusProgress from '../Others/StatusProgress'
@@ -81,7 +82,7 @@ const StatusModal = () => {
     const sum = filteredArray.reduce((accumulator, currentValue, index) => {
       return index === 0? 0: accumulator + currentValue.media.duration;
     }, 0);
-    console.log(sum)
+    // if (arrIndex === array.length-1) setTimeout(() => dispatch(handleClose()), sum)
     return sum;
   }
 
@@ -113,7 +114,7 @@ const StatusModal = () => {
               </Button>
               <BasicMenu />
             </Stack>
-            <div className='absolute top-20 left-0 w-full h-full border-t border-primary'>
+            <div className='absolute top-20 left-0 w-full h-full'>
               <Stack direction='row' gap={0.2}>
                 {
                   selectedStatus.statusData.map((status, index, arr) => (
@@ -126,6 +127,20 @@ const StatusModal = () => {
                   ))
                 }
               </Stack>
+              <div className='relative flex justify-center h-full items-center pt-10 pb-36'>
+                  {selectedStatus.statusData.map((item, index, arr) => (
+                    index === arr.length-1 &&
+                      <img
+                        className='object-fit w-full max-w-[800px] h-full max-h-[500px]'
+                        src={item.media.src}
+                        alt='status-img'
+                        loading="lazy"
+                      />
+                  ))}
+                  <div className='absolute bottom-10'>
+                    <VisibilityIcon />
+                  </div>
+              </div>
             </div>
           </Box>
         </Fade>

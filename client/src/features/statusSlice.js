@@ -16,7 +16,7 @@ const initialState = {
         statusData: [],
     },
     modal: {
-        isOpen: true,
+        isOpen: false,
     },
     amount: 0,
     total: 0,
@@ -182,7 +182,6 @@ const allStatus = [
 export const getAllStatus = createAsyncThunk('status/getAllStatus',
     async (name, thunkAPI) => {
         try {
-            // console.log('thunkAPI');
             // console.log('jyugyu', thunkAPI.getState());
             // const response = await axios(url);
             // return response.data;
@@ -208,7 +207,6 @@ const statusSlice = createSlice({
         },
         getSingleStatus: (state, action) => {
             const statusID = action.payload;
-            console.log(`Status with the ID '${statusID}' selected!`);
             state.selectedStatus = state.allStatus.filter(status => status.id === statusID)[0];
         }
     },
