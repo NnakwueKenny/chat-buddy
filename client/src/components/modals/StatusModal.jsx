@@ -137,8 +137,10 @@ const StatusModal = () => {
                         loading="lazy"
                       />
                   ))}
-                  <div className='absolute bottom-10'>
-                    <VisibilityIcon />
+                  <div className='absolute bottom-24'>
+                    <Button>
+                      <VisibilityIcon />
+                    </Button>
                   </div>
               </div>
             </div>
