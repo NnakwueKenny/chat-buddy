@@ -9,7 +9,6 @@ import { styled } from '@mui/system';
 import { useTheme } from '@mui/material/styles';
 
 import StatusProgress from '../others/StatusProgress';
-import PieChart from '../others/PieChart'
 
 import { closeStatusModal, toggleMute } from '../../features/statusSlice';
 
