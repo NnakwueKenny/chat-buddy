@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // import axios from "axios";
+import img1 from '../imgs/20220828_192641.jpg'
 
 const url = 'https://course-api.com/react-useReducer-cart-project';
 
@@ -45,7 +46,7 @@ const allStatus = [
                 media: {
                     alt: '',
                     duration: 5000,
-                    src: 'https://images.pexels.com/photos/6236640/pexels-photo-6236640.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load',
+                    src: img1,
                 },
                 read: false, 
             },

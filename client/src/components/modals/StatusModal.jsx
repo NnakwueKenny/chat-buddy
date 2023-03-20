@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { Button, Box, Modal, Backdrop, Fade, Avatar, Stack, Typography, Menu, MenuItem } from '@mui/material';
+import { Button, Box, Modal, Backdrop, Fade, Avatar, Stack, Typography, Menu, MenuItem, Divider } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { styled } from '@mui/system';
+import { useTheme } from '@mui/material/styles';
 
-import StatusProgress from '../Others/StatusProgress'
+import StatusProgress from '../others/StatusProgress';
+import PieChart from '../others/PieChart'
 
 import { closeStatusModal, toggleMute } from '../../features/statusSlice';
 
@@ -17,7 +19,9 @@ const style = {
   bgcolor: 'background.default',
   border: '2px solid grey',
   boxShadow: 10,
-  p: 1,
+  p: 0,
+  display: 'flex',
+  flexDirection: 'column'
 };
 
 const StyledBackDrop = styled(Backdrop, {
@@ -68,7 +72,36 @@ const BasicMenu = () => {
   );
 }
 
+const status = {
+  id: 0,
+  muted: false,
+  userName: 'Kene Nnakwue',
+  profilePicture: '',
+  lastUpdate: 'Today, 12:36',
+  statusData: [
+      {
+          id: 1,
+          media: {
+              alt: '',
+              duration: 5000,
+              src: 'https://images.pexels.com/photos/15098091/pexels-photo-15098091.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load',
+          },
+          read: false, 
+      },
+      {
+          id: 2,
+          media: {
+              alt: '',
+              duration: 5000,
+              src: 'https://images.pexels.com/photos/15098091/pexels-photo-15098091.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load',
+          },
+          read: false, 
+      },
+  ],
+}
+
 const StatusModal = () => {
+  const theme = useTheme();
   const dispatch = useDispatch();
   const { isOpen } = useSelector((state) =>  state.status.modal );
   const { selectedStatus } = useSelector((state) =>  state.status );
@@ -76,13 +109,15 @@ const StatusModal = () => {
   const handleClose = () => {
     dispatch(closeStatusModal());
   };
+  const [ showStatusCount, setShowStatusCount ] = useState(false);
+  const toggleShowStatusCount = (toggleValue) => setShowStatusCount(prevVal => !prevVal)
 
   const getCumulativeDuration = (array, arrIndex, duration) => {
     const filteredArray = array.filter((element, index) => index <= arrIndex );
     const sum = filteredArray.reduce((accumulator, currentValue, index) => {
       return index === 0? 0: accumulator + currentValue.media.duration;
     }, 0);
-    // if (arrIndex === array.length-1) setTimeout(() => dispatch(handleClose()), sum)
+    if (arrIndex === array.length-1) setTimeout(() => dispatch(handleClose()), sum)
     return sum;
   }
 
@@ -101,7 +136,9 @@ const StatusModal = () => {
       >
         <Fade in={isOpen}>
           <Box sx={style}>
-            <Stack direction='row' justifyContent='space-between'>
+            <Stack direction='row' onClick={() => setShowStatusCount(false)}
+              justifyContent='space-between'
+            >
               <Button onClick={handleClose}><ArrowBack /></Button>
               <Button variant='text' sx={{width: '100%', textTransform: 'none', color: 'text.primary' }}>
                 <Stack sx={{width: '100%'}} direction='row' alignItems='center' spacing={1.5}>
@@ -114,7 +151,7 @@ const StatusModal = () => {
               </Button>
               <BasicMenu />
             </Stack>
-            <div className='absolute top-20 left-0 w-full h-full'>
+            <div className='flex flex-col h-full px-2'>
               <Stack direction='row' gap={0.2}>
                 {
                   selectedStatus.statusData.map((status, index, arr) => (
@@ -127,20 +164,52 @@ const StatusModal = () => {
                   ))
                 }
               </Stack>
-              <div className='relative flex justify-center h-full items-center pt-10 pb-36'>
+              <div
+                className='relative flex justify-center h-full items-center w-full'
+              >
                   {selectedStatus.statusData.map((item, index, arr) => (
                     index === arr.length-1 &&
-                      <img
-                        className='object-fit w-full max-w-[800px] h-full max-h-[500px]'
-                        src={item.media.src}
-                        alt='status-img'
-                        loading="lazy"
-                      />
+                      <div
+                        className='flex justify-center w-full h-full items-center' 
+                        onClick={() => setShowStatusCount(false)}
+                      >
+                        <img
+                          className='object-fit w-auto max-w-[850px] h-full max-h-[550px]'
+                          src={item.media.src}
+                          alt='status-img'
+                          loading="lazy"
+                        />
+                      </div>
                   ))}
-                  <div className='absolute bottom-24'>
-                    <Button>
+                  <div
+                    className='rounded-t-xl shadow-xl bg-white dark:bg-gray-700 absolute bottom-0 w-full max-w-3xl flex flex-col items-center px-2 divide-y divide-primary'>
+                    <Button onClick={toggleShowStatusCount} 
+                      className='flex flex-col items-center w-full'>
+                      20
                       <VisibilityIcon />
                     </Button>
+                    <Box bgcolor='background.default' className={`${showStatusCount? 'flex flex-col gap-2 max-h-96 overflow-auto': 'hidden'} py-3 w-full`}>
+                      {  ['a', 'b', 'c', 'd'].map( () => (
+                        <Stack
+                            px={3} direction='row' alignItems='center'
+                            gap={1}
+                            width='100%'
+                          >
+                          <div className='z-50 h-12 w-12 flex items-end justify-center rounded-full overflow-hidden'>
+                            <img alt='something' className='obfect-fit w-full h-full'
+                              src='https://images.pexels.com/photos/15098091/pexels-photo-15098091.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load'
+                            />
+                          </div>
+                          <Box sx={{ }}>
+                            <Stack direction='column' sx={{ display: 'flex', alignItems: 'start', justifyContent: 'space-between', color: 'darkText' }}>
+                              <Typography variant='body1' component='h2' sx={{ color: 'text.primary', fontWeight: '400' }}>{status.userName}</Typography>
+                              <Typography variant='caption' noWrap sx={{ width: '100%', color: theme.palette.text.secondary, display: 'flex', justifyContent: 'start' }} component='h2'>{status.lastUpdate}</Typography>
+                            </Stack>
+                          </Box>
+                          </Stack>
+                        ))
+                      }
+                    </Box>
                   </div>
               </div>
             </div>

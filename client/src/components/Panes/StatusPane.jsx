@@ -6,43 +6,9 @@ import { Avatar, Button, Grid, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { Stack } from '@mui/system';
 
-import Chart from "chart.js/auto";
-import { CategoryScale } from "chart.js";
-import { Pie } from "react-chartjs-2";
-
 import { getAllStatus, openStatusModal, getSingleStatus } from '../../features/statusSlice';
 import StatusModal from '../modals/StatusModal';
-
-Chart.register(CategoryScale);
-
-function PieChart({ statusData }) {
-    const [chartData, setChartData] = useState({
-        datasets: [
-            {
-                label: 'Status',
-                data: statusData.map(item => 1),
-                backgroundColor: statusData.map(status => status.viewed? 'grey': 'purple'),
-                borderColor: "white",
-                borderWidth: 2
-            }
-        ]
-    });
-
-    return (
-        <div className="chart-container w-[68px] flex justify-center items-center bg-red-500 pb-[2px]">
-            <Pie
-                data={chartData}
-                options={{
-                    plugins: {
-                        title: {
-                            display: false,
-                        }
-                    }
-                }}
-            />
-        </div>
-    );
-}
+import PieChart from '../others/PieChart';
 
 const Pane = ({ status, type }) => {
     const theme = useTheme();
@@ -106,7 +72,7 @@ const StatusPane = () => {
     }, [])
 
     return (
-        <Box sx={{ pr: 1 }}>
+        <Box sx={{ pr: 1, position: 'relative'}}>
             <Grid>
                 <Pane status={ recentStatus } type='recent'/>
                 <Pane status={ viewedStatus } type='viewed'/>
