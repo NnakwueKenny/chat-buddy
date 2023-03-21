@@ -43,14 +43,14 @@ const closedMixin = (theme) => ({
   },
 });
 
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'flex-end',
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-}));
+// const DrawerHeader = styled('div')(({ theme }) => ({
+//   display: 'flex',
+//   alignItems: 'center',
+//   justifyContent: 'flex-end',
+//   padding: theme.spacing(0, 1),
+//   // necessary for content to be below app bar
+//   ...theme.mixins.toolbar,
+// }));
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -88,66 +88,66 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 const Layout = () => {
-    const dispatch = useDispatch();
-    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-    const isPhoneAndMediumTablet = useMediaQuery('(max-width:700px)');
-    const isBigTabletAndAbove = useMediaQuery('(min-width:701px)');
-    
-    const { theme } = useSelector((store) => store.theme);
-    const appTheme = useMemo(
-        () =>
-          createTheme(theme),
-          [theme]
-      );
+  const dispatch = useDispatch();
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  const isPhoneAndMediumTablet = useMediaQuery('(max-width:700px)');
+  const isBigTabletAndAbove = useMediaQuery('(min-width:701px)');
 
-    useEffect(() => {
-        dispatch(toggleThemeMode(prefersDarkMode ? 'dark' : 'light',));
-    }, [dispatch, prefersDarkMode]);
+  const { theme } = useSelector((store) => store.theme);
+  const appTheme = useMemo(
+    () =>
+      createTheme(theme),
+    [theme]
+  );
 
-    return (
-        <ThemeProvider theme={appTheme}>
-            <Box sx={{ display: 'flex' }}>
-                <CssBaseline />
-                <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
-                    <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <Typography color={appTheme.palette.grey['50']} variant="h6" noWrap component="div">
-                            Chat Buddy
-                        </Typography>
-                    </Toolbar>
-                    {
-                        isPhoneAndMediumTablet &&
-                        <TopNav />
-                    }
-                </AppBar>
-                {
-                    isBigTabletAndAbove &&
-                    <Drawer
-                        variant="permanent"
-                        sx={{
-                            width: drawerWidth,
-                            flexShrink: 0,
-                            color: 'text.secondary',
-                            [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
-                        }}
-                    >
-                        <Toolbar />
-                        <Divider />
-                        <SideNav />
-                    </Drawer>
-                }
-                <Box component="main" sx={{ flexGrow: 1, p: 0 }}>
-                  {
-                    isPhoneAndMediumTablet && 
-                    <>
-                      <Toolbar />
-                    </>
-                  }
-                  <Toolbar />
-                  <Outlet />
-                </Box>
-            </Box>
-        </ThemeProvider>
-    );
+  useEffect(() => {
+    dispatch(toggleThemeMode(prefersDarkMode ? 'dark' : 'light',));
+  }, [dispatch, prefersDarkMode]);
+
+  return (
+    <ThemeProvider theme={appTheme}>
+      <Box sx={{ display: 'flex' }}>
+        <CssBaseline />
+        <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+          <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Typography color={appTheme.palette.grey['50']} variant="h6" noWrap component="div">
+              Chat Buddy
+            </Typography>
+          </Toolbar>
+          {
+            isPhoneAndMediumTablet &&
+            <TopNav />
+          }
+        </AppBar>
+        {
+          isBigTabletAndAbove &&
+          <Drawer
+            variant="permanent"
+            sx={{
+              width: drawerWidth,
+              flexShrink: 0,
+              color: 'text.secondary',
+              [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
+            }}
+          >
+            <Toolbar />
+            <Divider />
+            <SideNav />
+          </Drawer>
+        }
+        <Box component="main" sx={{ flexGrow: 1, p: 0 }}>
+          {
+            isPhoneAndMediumTablet &&
+            <>
+              <Toolbar />
+            </>
+          }
+          <Toolbar />
+          <Outlet />
+        </Box>
+      </Box>
+    </ThemeProvider>
+  );
 }
 
 export default Layout;

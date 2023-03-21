@@ -87,7 +87,7 @@ export default function TopNav() {
         {
             icon: <MessageIcon />,
             navigateto: '/chats',
-            value: currentPath === '/chats' || currentPath === '/'? 'one': currentPath === '/status'? 'three': 'two',
+            value: currentPath.includes('chats') || currentPath === '/'? 'one': currentPath === '/status'? 'three': 'two',
             label: 'Chats'
         },
         {
@@ -99,7 +99,7 @@ export default function TopNav() {
         {
             icon: <PhoneIcon />,
             navigateto: '/calls',
-            value: currentPath === '/calls'? 'one': currentPath === '/chats' || currentPath === '/'? 'three': 'two',
+            value: currentPath === '/calls'? 'one': currentPath.includes('chats') || currentPath === '/'? 'three': 'two',
             label: 'Calls'
         },
     ]

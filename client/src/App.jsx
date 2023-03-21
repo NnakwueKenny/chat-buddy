@@ -1,16 +1,16 @@
 import React, { useMemo } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Layout from './components/Layout'
+import { useRoutes } from 'react-router-dom';
 
 import { useMediaQuery } from '@mui/material';
+import Layout from './components/Layout'
 import ChatPane from './components/Panes/ChatPane';
-import { useRoutes } from 'react-router-dom';
+import Conversation from './components/Panes/Conversation';
 import StatusPane from './components/Panes/StatusPane';
 import CallPane from './components/Panes/CallPane';
 
 const App = () => {
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
   const router = [
     {
@@ -22,6 +22,7 @@ const App = () => {
         // { index: true, element: <ChatPane /> },
         { path: '/', element: <ChatPane /> },
         { path: '/chats', element: <ChatPane /> },
+        { path: '/chats/:chatID', element: <Conversation /> },
         { path: '/status', element: <StatusPane /> },
         { path: '/calls', element: <CallPane /> },
         // { path: '/home', element: home },
