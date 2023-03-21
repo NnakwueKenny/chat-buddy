@@ -135,7 +135,7 @@ const Layout = () => {
             <SideNav />
           </Drawer>
         }
-        <Box component="main" sx={{ flexGrow: 1, p: 0 }}>
+        <Box component="main" sx={{ flexGrow: 1, pt: 2 }}>
           {
             isPhoneAndMediumTablet &&
             <>

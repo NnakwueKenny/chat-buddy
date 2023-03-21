@@ -86,36 +86,62 @@ const ChatPane = () => {
   const navigate = useNavigate();
 
   return (
-    <Box sx={{ pr: 1}}>
-      <Grid>
+    <>
       {
-        allChats.map(chat => (
-          <Stack key={chat.id} p={1} bgcolor='primary' direction='row' gap={1}>
-            <Button>
-              <Avatar sx={{height: 48, width: 48 }} alt={chat.alt} src="/static/images/avatar/1.jpg" />
-            </Button>
-            <Button variant='text' onClick={() => navigate(`/chats/chatID`)}
-              sx={{width: '100%', textTransform: 'none'}}
-            >
-              <Box sx={{width: '100%'}}>
-                <Stack direction='row' sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: 'darkText' }}>
-                  <Typography variant='body1' component='h2' sx={{ color: theme.palette.text.primary, fontWeight: '400' }}>{chat.chatName}</Typography>
-                  <Typography variant='caption' component='h2' sx={{ color: theme.palette.text.unreadMessage }}>{chat.timeReceived}</Typography>
-                </Stack>
-                <Stack direction='row' sx={{alignItems: 'center', justifyContent: 'space-between', gap: '5px' }}>
-                  <Typography variant='caption' noWrap sx={{ width: '100%', color: theme.palette.text.secondary, display: 'flex', justifyContent: 'start' }} component='h2'>{chat.lastMessage}</Typography>
-                  <div className='flex justify-center items-center bg-primary text-white rounded-full text-[10px] min-w-[20px] px-[5px]'>
-                    <span>{chat.unreadMessages <100 ? chat.unreadMessages: `99+`}</span>
-                  </div>
-                </Stack>
-              </Box>
-            </Button>
-          </Stack>
-        ))
+        ['1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'].map(() => <Stack
+          p={1} bgcolor='primary'
+          direction='row' gap={1}
+          sx={{ width: '100%', overflow: 'hidden' }}
+        >
+          <Button>
+            <Avatar sx={{ height: 48, width: 48 }} alt={'chat.alt'} src="/static/images/avatar/1.jpg" />
+          </Button>
+          <Button variant='text' onClick={() => navigate(`/chats/chatID`)}
+            sx={{ width: '100%', textTransform: 'none', display: 'flex', flexDirection: 'column' }}
+          >
+            <Stack direction='row' sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: 'darkText', width: '100%' }}>
+              <Typography variant='body1' component='h2' sx={{ color: theme.palette.text.primary, fontWeight: '400' }}>{'Kene Nnakwue'}</Typography>
+              <Typography variant='caption' component='h2' sx={{ color: theme.palette.text.unreadMessage }}>{'13:46'}</Typography>
+            </Stack>
+            <Stack direction='row' sx={{ alignItems: 'center', justifyContent: 'space-between', gap: '5px' }}>
+              <Typography variant='caption' noWrap sx={{ width: '100%', color: theme.palette.text.secondary, display: 'flex', justifyContent: 'start' }} component='h2'>chat.lastMessage</Typography>
+              <div className='flex justify-center items-center bg-primary text-white rounded-full text-[10px] min-w-[20px] px-[5px]'>
+                <span>`99+`</span>
+              </div>
+            </Stack>
+          </Button>
+        </Stack>)
       }
-      </Grid>
-    </Box>
+    </>
   )
 }
 
 export default ChatPane;
+
+// {
+//   allChats.map(chat => (
+//     <Stack
+//       key={chat.id} p={1} bgcolor='primary'
+//       direction='row' gap={1}
+//       sx={{ width:'100%', overflow: 'hidden' }}
+//     >
+//       <Button>
+//         <Avatar sx={{height: 48, width: 48 }} alt={chat.alt} src="/static/images/avatar/1.jpg" />
+//       </Button>
+//       <Button variant='text' onClick={() => navigate(`/chats/chatID`)}
+//         sx={{width: '100%', textTransform: 'none', display: 'flex', flexDirection: 'column'}}
+//       >
+//         <Stack direction='row' sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: 'darkText', backgroundColor: 'green', width: '100%'}}>
+//           <Typography variant='body1' component='h2' sx={{ color: theme.palette.text.primary, fontWeight: '400' }}>{chat.chatName}</Typography>
+//           <Typography variant='caption' component='h2' sx={{ color: theme.palette.text.unreadMessage }}>{chat.timeReceived}</Typography>
+//         </Stack>
+//         <Stack direction='row' sx={{alignItems: 'center', justifyContent: 'space-between', gap: '5px' }}>
+//           <Typography variant='caption' noWrap sx={{ width: '100%', color: theme.palette.text.secondary, display: 'flex', justifyContent: 'start' }} component='h2'>{chat.lastMessage}</Typography>
+//           <div className='flex justify-center items-center bg-primary text-white rounded-full text-[10px] min-w-[20px] px-[5px]'>
+//             <span>{chat.unreadMessages <100 ? chat.unreadMessages: `99+`}</span>
+//           </div>
+//         </Stack>
+//       </Button>
+//     </Stack>
+//   ))
+// }

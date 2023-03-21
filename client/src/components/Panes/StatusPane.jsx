@@ -29,6 +29,7 @@ const Pane = ({ status, type }) => {
             </Typography>
             {
                 status.map(status => (
+                    <>
                     <Stack
                         key={status.id} px={3} pb={2}
                         bgcolor='primary' direction='row'
@@ -57,6 +58,35 @@ const Pane = ({ status, type }) => {
                             </Box>
                         </Button>
                     </Stack>
+                    <Stack
+                        key={status.id} px={3} pb={2}
+                        bgcolor='primary' direction='row'
+                        gap={1} onClick={() => openModal(status.id)}
+                    >
+                        <Button
+                            sx={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'end'}}
+                        >
+                            <Box sx={{ }} className='z-50 absolute h-full w-full flex items-end justify-center'>
+                                <Avatar sx={{ height: 48, width: 48,  }}
+                                    alt={status.statusData[status.statusData.length-1].media.alt}
+                                    src={status.statusData[status.statusData.length-1].media.src} />
+                            </Box>
+                            <div className='absolute h-full w-full flex items-center justify-center bg-red-400'>
+                                <PieChart statusData={status.statusData} />
+                            </div>
+                        </Button>
+                        <Button variant='text'
+                            sx={{ width: '100%', textTransform: 'none' }}
+                        >
+                            <Box sx={{ width: '100%' }}>
+                                <Stack direction='column' sx={{ display: 'flex', alignItems: 'start', justifyContent: 'space-between', color: 'darkText' }}>
+                                    <Typography variant='body1' component='h2' sx={{ color: 'text.primary', fontWeight: '400' }}>{status.userName}</Typography>
+                                    <Typography variant='caption' noWrap sx={{ width: '100%', color: theme.palette.text.secondary, display: 'flex', justifyContent: 'start' }} component='h2'>{status.lastUpdate}</Typography>
+                                </Stack>
+                            </Box>
+                        </Button>
+                    </Stack>
+                    </>
                 ))
             }
         </>
