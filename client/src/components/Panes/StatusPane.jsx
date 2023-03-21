@@ -8,7 +8,7 @@ import { Stack } from '@mui/system';
 
 import { getAllStatus, openStatusModal, getSingleStatus } from '../../features/statusSlice';
 import StatusModal from '../modals/StatusModal';
-import PieChart from '../others/PieChart';
+// import PieChart from '../others/PieChart';
 
 const Pane = ({ status, type }) => {
     const theme = useTheme();
@@ -44,7 +44,7 @@ const Pane = ({ status, type }) => {
                                     src={status.statusData[status.statusData.length-1].media.src} />
                             </Box>
                             <div className='absolute h-full w-full flex items-center justify-center bg-red-400'>
-                                <PieChart statusData={status.statusData} />
+                                {/*<PieChart statusData={status.statusData} />*/}
                             </div>
                         </Button>
                         <Button variant='text'
@@ -72,7 +72,7 @@ const Pane = ({ status, type }) => {
                                     src={status.statusData[status.statusData.length-1].media.src} />
                             </Box>
                             <div className='absolute h-full w-full flex items-center justify-center bg-red-400'>
-                                <PieChart statusData={status.statusData} />
+                                {/*<PieChart statusData={status.statusData} />*/}
                             </div>
                         </Button>
                         <Button variant='text'
