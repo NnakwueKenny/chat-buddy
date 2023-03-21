@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
@@ -85,6 +85,10 @@ const ChatPane = () => {
   const theme = useTheme();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    console.log(theme.palette.text.secondary)
+  })
+
   return (
     <>
       {
@@ -103,10 +107,12 @@ const ChatPane = () => {
               <Typography variant='body1' component='h2' sx={{ color: theme.palette.text.primary, fontWeight: '400' }}>{'Kene Nnakwue'}</Typography>
               <Typography variant='caption' component='h2' sx={{ color: theme.palette.text.unreadMessage }}>{'13:46'}</Typography>
             </Stack>
-            <Stack direction='row' sx={{ alignItems: 'center', justifyContent: 'space-between', gap: '5px' }}>
-              <Typography variant='caption' noWrap sx={{ width: '100%', color: theme.palette.text.secondary, display: 'flex', justifyContent: 'start' }} component='h2'>chat.lastMessage</Typography>
+            <Stack direction='row' sx={{ alignItems: 'center', justifyContent: 'space-between', gap: '5px', width: '100%' }}>
+              <span className={`text-[${theme.palette.text.secondary}] truncate w-56 md:w-96 lg:w-[450px] flex justify-start`}>
+                Last Message
+              </span>
               <div className='flex justify-center items-center bg-primary text-white rounded-full text-[10px] min-w-[20px] px-[5px]'>
-                <span>`99+`</span>
+                <span>99+</span>
               </div>
             </Stack>
           </Button>
