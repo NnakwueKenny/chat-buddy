@@ -10,6 +10,7 @@ import { useTheme } from '@mui/material/styles';
 
 import StatusProgress from '../others/StatusProgress';
 
+import BasicMenu from '../others/BasicMenu';
 import { closeStatusModal, toggleMute } from '../../features/statusSlice';
 
 const style = {
@@ -32,44 +33,6 @@ const StyledBackDrop = styled(Backdrop, {
 })({
   zIndex: -1,
 });
-
-const BasicMenu = () => {
-  const dispatch = useDispatch();
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  return (
-    <div>
-      <Button
-        id="basic-button"
-        aria-controls={open ? 'basic-menu' : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
-        onClick={handleClick}
-      >
-        <MoreVertIcon />
-      </Button>
-      <Menu
-        component='div'
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button',
-        }}
-      >
-        <MenuItem onClick={() => { dispatch(toggleMute()); handleClose(); }}>Mute Status</MenuItem>
-      </Menu>
-    </div>
-  );
-}
 
 const status = {
   id: 0,
@@ -120,6 +83,13 @@ const StatusModal = () => {
     return sum;
   }
 
+  const mainMenuItems = [
+    {
+        text: 'Mute',
+        action: () => { dispatch(toggleMute())}
+    },
+  ]
+
   return (
     <div>
       <Modal
@@ -148,7 +118,7 @@ const StatusModal = () => {
                   <Typography>{selectedStatus.userName}</Typography>
                 </Stack>
               </Button>
-              <BasicMenu />
+              <BasicMenu menuItems={mainMenuItems} color='primary.main'/>
             </Stack>
             <div className='flex flex-col h-full px-2'>
               <Stack direction='row' gap={0.2}>

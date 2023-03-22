@@ -108,9 +108,11 @@ const ChatPane = () => {
               <Typography variant='caption' component='h2' sx={{ color: theme.palette.text.unreadMessage }}>{'13:46'}</Typography>
             </Stack>
             <Stack direction='row' sx={{ alignItems: 'center', justifyContent: 'space-between', gap: '5px', width: '100%' }}>
-              <span className={`text-[${theme.palette.text.secondary}] truncate w-56 md:w-96 lg:w-[450px] flex justify-start`}>
-                Last Message
-              </span>
+              <div className='w-full max-w-[220px] md:max-w-lg lg:max-w-2xl xl:max-w-3xl flex justify-start'>
+                <span className={`text-[${theme.palette.text.secondary}] w-full text-start overflow-ellipsis text-nowrap truncate`}>
+                  Last MessageHow can I make a long text truncate if it passes it's parent's container in tailwindcss? truncate if it passes it's parent's container in tailwindcss?
+                </span>
+              </div>
               <div className='flex justify-center items-center bg-primary text-white rounded-full text-[10px] min-w-[20px] px-[5px]'>
                 <span>99+</span>
               </div>

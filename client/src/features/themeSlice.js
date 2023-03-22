@@ -14,6 +14,8 @@ const initialState = {
       mode: 'light',
       primary: {
         main: purple[600],
+        light: grey[200],
+        mediumLight: grey[200],
       },
       divider: purple[200],
       background: {
@@ -24,6 +26,7 @@ const initialState = {
       },
       text: {
         primary: grey[800],
+        light: grey[100],
         header: grey[300],
         secondary: grey[600],
         unreadMessage: green[600]
@@ -44,6 +47,8 @@ const themeSlice = createSlice({
           // palette values for light mode
           primary: {
             main: purple[600],
+            light: grey[200],
+            mediumLight: grey[200],
           },
           divider: purple[200],
           background: {
@@ -53,6 +58,7 @@ const themeSlice = createSlice({
           },
           text: {
             primary: grey[800],
+            light: grey[100],
             header: grey[300],
             secondary: grey[600],
             unreadMessage: green[600]
@@ -64,6 +70,8 @@ const themeSlice = createSlice({
           // palette values for dark mode
           primary: {
             main: purple[800],
+            light: grey[200],
+            mediumLight: grey[200],
           },
           divider: {
             main: purple[700],
@@ -75,6 +83,7 @@ const themeSlice = createSlice({
           },
           text: {
             primary: grey[400],
+            light: grey[100],
             secondary: grey[600],
             unreadMessage: green[600]
           },
