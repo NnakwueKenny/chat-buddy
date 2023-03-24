@@ -2,12 +2,16 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { Typography, IconButton, Avatar, Chip, Stack, Box } from '@mui/material';
+import { Typography, IconButton, Avatar, Chip, Stack, Box, TextField } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
 import ArrowBack from '@mui/icons-material/ArrowBack';
 import VideoCallIcon from '@mui/icons-material/VideoCall';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
+import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
+import KeyboardIcon from '@mui/icons-material/Keyboard';
+import SendIcon from '@mui/icons-material/Send';
+import MicNoneIcon from '@mui/icons-material/MicNone';
 
 import BasicMenu from '../others/BasicMenu';
 
@@ -39,10 +43,10 @@ const MessageItem = ({ sender, message, variant, justify }) => {
         <Box sx={{ display: 'flex', justifyContent: justify, width: '100%' }}>
             <Stack
                 direction="row" justifyContent={justify}
-                mb={2} position='relative' className='w-72'
+                mb={2} position='relative' className='w-72 md:w-80 lg:w-full max-w-[450px]'
                 sx={{ color: `${variant === 'filled'? 'primary.main': 'text.secondary'}`}}
             >
-                <span className='absolute z-10 text-sm top-0 left-0 px-3 py-1'>{sender}</span>
+                <span className='absolute z-10 text-sm top-0 left-0 px-3 py-1 font-medium'>{sender}</span>
                 <Chip
                     sx={{
                         height: 'auto',
@@ -81,14 +85,18 @@ const Conversation = () => {
     // const EmojiKeyboard = new Picker()
     const navigate = useNavigate();
     const { selectedStatus } = useSelector((state) =>  state.status );
-    const [selectedEmoji, setSelectedEmoji] = useState(null);
-  
-    const handleEmojiSelect = (emoji) => {
-      setSelectedEmoji(emoji.native);
+
+    const [ isTyping, setIsTyping ] = useState(false);
+    const [ showNormalKeyboard, setShowNormalKeyboard ] = useState(true);
+    const toggleKeyBoardType = () => {
+        console.log('Keyboard toggled');
+        setShowNormalKeyboard(prevVal => !prevVal);
     }
+    
+    const [ message, setMessage ] = useState('');
 
     return (
-        <div className='absolute flex flex-col top-0 left-0 w-full h-full bg-white z-[99999]'>
+        <div className='fixed flex flex-col top-0 left-0 w-full h-full bg-white z-[99999]'>
             <div className='bg-primary py-3 flex justify-between'>
                 <div className='flex items-center'>
                     <IconButton
@@ -120,7 +128,7 @@ const Conversation = () => {
                     <BasicMenu menuItems={ mainMenuItems } color='primary.light' />
                 </div>
             </div>
-            <div className='h-full overflow-auto py-3 px-4'>
+            <Box className='mb-auto h-full overflow-auto px-4 pt-3'>
                 <DateItem content={'22 March, 2023'}/>
                 <MessageItem
                     color='primary' variant='none' justify='left'
@@ -134,32 +142,82 @@ const Conversation = () => {
                     color='primary' variant='filled' justify='right'
                     message='Hi! How are you? What is happening to you? I have been looking for you all these while...' sender='Me'
                 />
-                <Box className='flex flex-col items-center justify-center '>
-                    <Chip
-                        sx={{
-                            height: 'auto',
-                            width: '100%',
-                            paddingTop: 3,
-                            paddingBottom: 3,
-                            justifyContent: 'start',
-                            textAlign: 'left',
-                            '& .MuiChip-label': {
-                                display: 'block',
-                                whiteSpace: 'normal',
-                            },
-                        }}
-                        size='medium' variant='filled'
-                        label={
-                            <ArrowBack/>
-                        }
-                    />
+                <MessageItem
+                    color='primary' variant='filled' justify='right'
+                    message='Hi! How are you? What is happening to you? I have been looking for you all these while...' sender='Me'
+                />
+                <MessageItem
+                    color='primary' variant='none' justify='left'
+                    message='Hello! Hi! How are you? What is happening to you? I have been looking for you all these while...' sender='Kene Nnakwue'
+                />
+                <MessageItem
+                    color='primary' variant='filled' justify='right'
+                    message='Hi! How are you? What is happening to you? I have been looking for you all these while...' sender='Me'
+                />
+                <MessageItem
+                    color='primary' variant='filled' justify='right'
+                    message='Hi! How are you? What is happening to you? I have been looking for you all these while...' sender='Me'
+                />
+            </Box>
+            <div className='w-full flex flex-col items-center justify-center px-1 bg-black bg-opacity-5'>
+                <Stack
+                    className='w-96 md:w-full md:max-w-[700px] py-4 px-2'
+                    direction='row'
+                >
+                    <div className={`flex items-center justify-center w-full ${isTyping? 'bg-primary bg-opacity-10': 'bg-black bg-opacity-10'} rounded-lg p-2`}>
+                        <IconButton
+                            size='small' component="button"
+                            sx={{ color: `${isTyping? 'primary.main': 'text.secondary'}` }} aria-label="go to home page"
+                            id="keyboard-toggle-button"
+                            aria-haspopup="true"
+                            onClick={() => toggleKeyBoardType()}
+                        >
+                            <>
+                                {
+                                    !showNormalKeyboard &&
+                                    <KeyboardIcon color='primary.main'/>
+                                }
+                                {
+                                    showNormalKeyboard &&
+                                    <EmojiEmotionsIcon />
+                                }
+                            </>
+                        </IconButton>
+                        <TextField
+                            id="standard-multiline-flexible"
+                            sx={{ width: '100%' }}
+                            value={message}
+                            onChange={(e) => setMessage(e.target.value)}
+                            onFocus={() => { setIsTyping(true) }}
+                            onBlur={() => { setIsTyping(false) }}
+                            multiline maxRows={3} variant="standard"
+                            placeholder='Your message here...'
+                        />
+                        <IconButton
+                            size='small' component="button" aria-label="go to home page"
+                            id="keyboard-toggle-button" aria-haspopup="true"
+                            onClick={() => toggleKeyBoardType()}
+                            sx={{ color: 'text.primary', zIndex: 999999999 }}
+                        >
+                            {
+                                message.length > 0?
+                                <SendIcon />
+                                :
+                                <MicNoneIcon />
+                            }
+                        </IconButton>
+                    </div>
+                </Stack>
+                {
+                    !showNormalKeyboard &&
                     <Picker
-                        style={{ display: 'flex', flexDirection: 'column', width: '100%'}}
-                        data={data} emojiSize={18} previewPosition='none' perLine={8}
-                        theme={theme.mode}
-                        onEmojiSelect={(e) => console.log('Emoji Selected!', e.native)}
+                        style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100px'}}
+                        data={data} emojiSize={18} previewPosition='none' perLine={11}
+                        emojiButtonSize={30} theme={theme.mode}
+                        onClickOutside={() => console.log(false)}
+                        onEmojiSelect={(e) => setMessage(prevVal => prevVal + e.native)}
                     />
-                </Box>
+                }
             </div>
         </div>
     )
