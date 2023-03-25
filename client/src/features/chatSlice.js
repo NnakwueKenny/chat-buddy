@@ -1,9 +1,16 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
-    allChats: [],
-    amount: 0,
-    total: 0,
+    allChats: [
+        {
+            id: 0,
+            
+        }
+    ],
+    modal: {
+        isOpen: false,
+    },
+    totalUnred: 0,
     isLoading: true,
 }
 

@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Typography, IconButton, Avatar, Chip, Stack, Box, TextField } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 import ArrowBack from '@mui/icons-material/ArrowBack';
 import VideoCallIcon from '@mui/icons-material/VideoCall';
@@ -82,18 +83,39 @@ const DateItem = ({ content }) => {
 
 const Conversation = () => {
     const theme = useTheme();
+    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+    const isPhoneAndMediumTablet = useMediaQuery('(max-width:720px)');
+    const isBigTabletAndAbove = useMediaQuery('(min-width:721px)');
+
+    const screenSizes = [
+        useMediaQuery(() => '(max-width:639px)'),
+        useMediaQuery(() => '(min-width:640px)'&& '(max-width:767px)'),
+        useMediaQuery(() => '(min-width:768px)'&& '(max-width:1023px)'),
+        useMediaQuery(() => '(min-width:1024px)'),
+    ];
+
+    const [ small, medium, tablet, desktop ] = screenSizes;
     // const EmojiKeyboard = new Picker()
     const navigate = useNavigate();
     const { selectedStatus } = useSelector((state) =>  state.status );
 
     const [ isTyping, setIsTyping ] = useState(false);
     const [ showNormalKeyboard, setShowNormalKeyboard ] = useState(true);
-    const toggleKeyBoardType = () => {
-        console.log('Keyboard toggled');
-        setShowNormalKeyboard(prevVal => !prevVal);
-    }
-    
+    const inputRef = useRef(null);
     const [ message, setMessage ] = useState('');
+    const [ cursorPosition, setCursorPosition ] = useState(0);
+    const setEmojiCurrentPos = (prevText, cursorPos, newText) => {
+        return prevText.slice(0, cursorPos)+newText+prevText.slice(cursorPos);
+    }
+    const toggleKeyBoardType = () => {
+        setShowNormalKeyboard(prevVal => {
+            if ( !prevVal === true) {
+                inputRef.current.focus();
+                console.log(inputRef.current.selectionStart);
+            }
+            return !prevVal;
+        });
+    }
 
     return (
         <div className='fixed flex flex-col top-0 left-0 w-full h-full bg-white z-[99999]'>
@@ -161,7 +183,7 @@ const Conversation = () => {
             </Box>
             <div className='w-full flex flex-col items-center justify-center px-1 bg-black bg-opacity-5'>
                 <Stack
-                    className='w-96 md:w-full md:max-w-[700px] py-4 px-2'
+                    className='w-full max-w-[380px] sm:max-w-[766px] md:w-[767px] lg:w-[1023px] py-4 px-2'
                     direction='row'
                 >
                     <div className={`flex items-center justify-center w-full ${isTyping? 'bg-primary bg-opacity-10': 'bg-black bg-opacity-10'} rounded-lg p-2`}>
@@ -185,11 +207,14 @@ const Conversation = () => {
                         </IconButton>
                         <TextField
                             id="standard-multiline-flexible"
-                            sx={{ width: '100%' }}
-                            value={message}
-                            onChange={(e) => setMessage(e.target.value)}
-                            onFocus={() => { setIsTyping(true) }}
-                            onBlur={() => { setIsTyping(false) }}
+                            sx={{ width: '100%' }} //autoFocus
+                            value={message} ref={inputRef}
+                            onChange={(e) => {
+                                setMessage(e.target.value);
+                                setCursorPosition(e.target)
+                            }}
+                            onFocus={() => { setIsTyping(true); console.log('Started typing!') }}
+                            onBlur={() => { setIsTyping(false); console.log('Stopped typing!') }}
                             multiline maxRows={3} variant="standard"
                             placeholder='Your message here...'
                         />
@@ -210,13 +235,37 @@ const Conversation = () => {
                 </Stack>
                 {
                     !showNormalKeyboard &&
-                    <Picker
-                        style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100px'}}
-                        data={data} emojiSize={18} previewPosition='none' perLine={11}
-                        emojiButtonSize={30} theme={theme.mode}
-                        onClickOutside={() => console.log(false)}
-                        onEmojiSelect={(e) => setMessage(prevVal => prevVal + e.native)}
-                    />
+                    <Box className='h-56'>
+                        <Picker
+                            data={data} previewPosition='none' theme={theme.mode}
+                            emojiSize={
+                                small? 18:
+                                medium? 22:
+                                tablet? 24:
+                                desktop? 26: 18
+                            }
+                            emojiButtonSize={
+                                small? 30:
+                                medium? 34:
+                                tablet? 36:
+                                desktop? 36: 30
+                            }
+                            perLine={
+                                small? 10:
+                                medium? 16:
+                                tablet? 18:
+                                desktop? 20: 12
+                            }
+                            // onClickOutside={() => console.log(false)}
+                            onEmojiSelect={(e) => setMessage(prevVal => {
+                                // prevVal + e.native
+                                const newText = setEmojiCurrentPos(prevVal, cursorPosition, e.native);
+                                console.log(newText);
+                                setCursorPosition(newText.length)
+                                return newText;
+                            })}
+                        />
+                    </Box>
                 }
             </div>
         </div>

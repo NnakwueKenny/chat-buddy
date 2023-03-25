@@ -92,7 +92,7 @@ const ChatPane = () => {
   return (
     <>
       {
-        ['1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'].map(() => <Stack
+        new Array(2).fill('').map(() => <Stack
           p={1} bgcolor='primary'
           direction='row' gap={1}
           sx={{ width: '100%', overflow: 'hidden' }}
