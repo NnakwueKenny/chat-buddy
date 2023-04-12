@@ -1,6 +1,7 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { io } from 'socket.io-client';
 
 import { Typography, IconButton, Avatar, Chip, Stack, Box, TextField } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
@@ -14,7 +15,7 @@ import KeyboardIcon from '@mui/icons-material/Keyboard';
 import SendIcon from '@mui/icons-material/Send';
 import MicNoneIcon from '@mui/icons-material/MicNone';
 
-import BasicMenu from '../others/BasicMenu';
+// import BasicMenu from '../others/BasicMenu';
 
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
@@ -83,20 +84,14 @@ const DateItem = ({ content }) => {
 
 const Conversation = () => {
     const theme = useTheme();
-    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-    const isPhoneAndMediumTablet = useMediaQuery('(max-width:720px)');
-    const isBigTabletAndAbove = useMediaQuery('(min-width:721px)');
-
+    const navigate = useNavigate();
     const screenSizes = [
         useMediaQuery(() => '(max-width:639px)'),
         useMediaQuery(() => '(min-width:640px)'&& '(max-width:767px)'),
         useMediaQuery(() => '(min-width:768px)'&& '(max-width:1023px)'),
         useMediaQuery(() => '(min-width:1024px)'),
     ];
-
     const [ small, medium, tablet, desktop ] = screenSizes;
-    // const EmojiKeyboard = new Picker()
-    const navigate = useNavigate();
     const { selectedStatus } = useSelector((state) =>  state.status );
 
     const [ isTyping, setIsTyping ] = useState(false);
@@ -116,6 +111,18 @@ const Conversation = () => {
             return !prevVal;
         });
     }
+
+    const socket = io('http://localhost:5002/chats');
+    useEffect(() => {
+        io.connect();
+        console.log('Hello')
+    }, [])
+    const sendMessage = (message) => {
+        socket.emit('event', message);
+    }
+    socket.on('message', (data) => {
+        console.log(data);
+    });
 
     return (
         <div className='fixed flex flex-col top-0 left-0 w-full h-full bg-white z-[99999]'>
@@ -147,7 +154,7 @@ const Conversation = () => {
                     >
                         <LocalPhoneIcon />
                     </IconButton>
-                    <BasicMenu menuItems={ mainMenuItems } color='primary.light' />
+                    {/*<BasicMenu menuItems={mainMenuItems} color='primary.light'/>*/}
                 </div>
             </div>
             <Box className='mb-auto h-full overflow-auto px-4 pt-3'>
@@ -212,6 +219,7 @@ const Conversation = () => {
                             onChange={(e) => {
                                 setMessage(e.target.value);
                                 setCursorPosition(e.target)
+                                sendMessage(e.target.value)
                             }}
                             onFocus={() => { setIsTyping(true); console.log('Started typing!') }}
                             onBlur={() => { setIsTyping(false); console.log('Stopped typing!') }}

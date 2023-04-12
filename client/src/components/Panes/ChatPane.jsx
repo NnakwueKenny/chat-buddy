@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import io from 'socket.io-client';
+
 import Box from '@mui/material/Box';
 import { Avatar, Button, Grid, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
@@ -84,6 +86,12 @@ const allChats = [
 const ChatPane = () => {
   const theme = useTheme();
   const navigate = useNavigate();
+
+  const socket = io('http://localhost:5002/');
+
+  useEffect(() => {
+    // socket.emit('message', {data: ''});
+  }, [])
 
   useEffect(() => {
     console.log(theme.palette.text.secondary)

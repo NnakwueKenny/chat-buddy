@@ -1,48 +1,35 @@
 const express = require('express');
+const mongoose = require('mongoose');
+const morgan = require('morgan');
+const bodyParser = require('body-parser');
 const cors = require('cors');
 const corsOptions = require('./config/corsOptions');
 require('dotenv').config();
-const PORT = process.env.PORT || 5002;
 
-const app = express();
-const server = require('http').createServer(app);
-const io = require('socket.io')(server);
-
+// Database connection
 const connectDB = require('./config/dbConnection');
 connectDB();
 
-io.on('connection', (socket) => {
-    console.log('A client has connected!');
+const DB = mongoose.connection;
+const app = express();
+
+DB.once('open', () => {
+    app.set('port', process.env.PORT || 5002);
+    app.listen(app.get('port'), function () {
+        console.log('Express started on http://localhost:' +
+            app.get('port') + '; press Ctrl-C to terminate.');
+    });
 });
 
-io.emit('message', 'Hello, clients!');
+app.use(cors(corsOptions));
+// app.use(morgan('dev'));
+// app.use(bodyParser.urlencoded({extended: true}));
+// app.use(bodyParser.json());
 
+// To access public/static files
+app.use('/uploads', express.static(__dirname + 'uploads'));
+app.use(express.static(__dirname + '/public'));
 
-// socket.on('message', (data) => {
-//     console.log(`Received message from client: ${data}`);
-// });
+const allChats = require('./routes/allChats');
 
-// socket.emit('message', 'Hello, server!');
-  
-// const app = express();
-// app.use(cors(corsOptions));
-
-// const server = http.createServer(app);
-// const io = new Server(server, {
-//     cors: {
-//         methods: ['GET', 'POST']
-//     }
-// });
-
-// server.listen(PORT, (req, res) => {
-//     console.log(`Server is running on port: ${PORT}`);
-//     return ({'Message': `Server is running on port: ${PORT}`})
-// });
-
-// io.on('connection', (socket) => {
-//     // console.log(`User connected: ${socket.id}`);
-//     socket.on('send_message', (data) => {
-//         // socket.broadcast.emit('receive_message');
-//         console.log(data);
-//     });
-// });
+app.use('/', allChats);

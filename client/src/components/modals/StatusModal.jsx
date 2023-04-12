@@ -10,7 +10,7 @@ import { useTheme } from '@mui/material/styles';
 
 import StatusProgress from '../others/StatusProgress';
 
-import BasicMenu from '../others/BasicMenu';
+// import BasicMenu from '../others/BasicMenu';
 import { closeStatusModal, toggleMute } from '../../features/statusSlice';
 
 const style = {
@@ -118,7 +118,7 @@ const StatusModal = () => {
                   <Typography>{selectedStatus.userName}</Typography>
                 </Stack>
               </Button>
-              <BasicMenu menuItems={mainMenuItems} color='primary.main'/>
+              {/*<BasicMenu menuItems={mainMenuItems} color='primary.main'/>*/}
             </Stack>
             <div className='flex flex-col h-full px-2'>
               <Stack direction='row' gap={0.2}>
