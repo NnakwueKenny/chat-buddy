@@ -8,7 +8,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import { styled } from '@mui/system';
 import { useTheme } from '@mui/material/styles';
 
-import StatusProgress from '../others/StatusProgress';
+// import StatusProgress from '../others/StatusProgress';
 
 // import BasicMenu from '../others/BasicMenu';
 import { closeStatusModal, toggleMute } from '../../features/statusSlice';
@@ -123,14 +123,14 @@ const StatusModal = () => {
             <div className='flex flex-col h-full px-2'>
               <Stack direction='row' gap={0.2}>
                 {
-                  selectedStatus.statusData.map((status, index, arr) => (
-                    <>
-                      <StatusProgress key={status.id}
-                        duration={status.media.duration}
-                        delay={getCumulativeDuration(arr, index, status.media.duration)}
-                      />
-                    </>
-                  ))
+                  // selectedStatus.statusData.map((status, index, arr) => (
+                  //   <>
+                  //     <StatusProgress key={status.id}
+                  //       duration={status.media.duration}
+                  //       delay={getCumulativeDuration(arr, index, status.media.duration)}
+                  //     />
+                  //   </>
+                  // ))
                 }
               </Stack>
               <div
